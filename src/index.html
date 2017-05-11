@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+  <title>JSON smart viewer</title>
+
+  <link rel="stylesheet" href="helper.css" />
+  <script src="helper.js"></script>
+  <script src="app.js"></script>
+</head>
+<body>
+  <h1>JSON smart viewer</h1>
+
+  <form id="get-json">
+    <label>URL <input type="url" value="https://raw.githubusercontent.com/substack/node-browserify/master/package.json" /></label>
+    <button>Submit</button>
+    <input type="reset" value="Reset" />
+  </form>
+
+  <div id="make-array"></div>
+</body>
+</html>
