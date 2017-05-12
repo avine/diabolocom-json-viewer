@@ -1,40 +1,37 @@
 
-document.addEventListener('DOMContentLoaded', function(event) {
-  const form = document.querySelector('#get-json');
-  const input = form.querySelector('input[type="url"]');
-  const button = form.querySelector('button');
-  const reset = form.querySelector('input[type="reset"]');
-  const array = document.querySelector('#make-array');
+jQuery(document).ready(function(event) {
+  const $form = jQuery('#get-json');
+  const $input = $form.find('input[type="url"]');
+  const $button = $form.find('button');
+  const $reset = $form.find('input[type="reset"]');
+  const $array = jQuery('#make-array');
 
   function freeze(bool = true) {
-    input.disabled = bool;
-    button.disabled = bool;
-    reset.disabled = bool;
+    $input.prop('disabled', bool);
+    $button.prop('disabled', bool);
+    $reset.prop('disabled', bool);
   }
 
-  form.addEventListener('submit', function (e) {
+  function message(text, css) {
+    $array.html(jQuery('<p>').text(text).addClass(css));
+  }
+
+  $form.submit(function (e) {
     e.preventDefault();
     freeze();
-    array.innerHTML = `\<p class="progress">In progress...\</p>`;
-
-    // Just to emulate a delay between the request and the response...
-    setTimeout(() => {
-
-      Helper.ajax(input.value).then(function (json) {
-        array.innerHTML = '';
-        try {
-          json = JSON.parse(json);
-        } catch (e) {
-          array.innerHTML = `\<p class="error">${e}\</p>`;
-        }
-        array.appendChild(Helper.json2Table(json));
-        freeze(false);
-      }).catch(function () {
-        array.innerHTML = '\<p class="error">Invalid URL\</p>';
-        freeze(false);
-      });
-
-    }, 1000);
-
+    message('In progress...', 'progress');
+    jQuery.get($input.val()).done(function (json) {
+      $array.html('');
+      try {
+        json = JSON.parse(json);
+        $array.html(Helper.json2Table(json));
+      } catch (e) {
+        message(e, 'error');
+      }
+      freeze(false);
+    }).fail(function () {
+      message('Invalid URL', 'error');
+      freeze(false);
+    });
   });
 });

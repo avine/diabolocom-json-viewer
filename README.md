@@ -5,5 +5,6 @@ A small test in pure Vanilla JS...
 
 ```bash
 npm install
+npm run build
 npm start
 ```

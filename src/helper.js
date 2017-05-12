@@ -1,58 +1,23 @@
 
 class Helper {
   /**
-   * Make Ajax request
-   * @param {string} url
-   * @param {string} method
-   * @return {promise}
-   */
-  static ajax(url, method = 'GET') {
-    return new Promise(function (resolve, reject) {
-      const xhr = new XMLHttpRequest();
-      xhr.open(method, url, true);
-      xhr.onreadystatechange = function (e) {
-        if (this.readyState == 4) {
-          this.status == 200 ? resolve(this.responseText) : reject();
-        }
-      };
-      xhr.send();
-    });
-  }
-
-  /**
    * Make array node from json object
    * @param {object} json
    * @param {number} maxRow
-   * @return {HTMLTableElement}
+   * @return {jQuery}
    */
   static json2Table(json, sortRows = true, maxRows = 10) {
-    const table = document.createElement('table');
-    table.appendChild(Helper.getTableRow(['Key', 'Info', 'Type'], 'th'));
+    const $table = jQuery('<table>').append(
+      Helper.getTableRow(['Key', 'Info', 'Type'], 'th')
+    );
     let rows = [];
     for (let key in json) {
       let val = json[key];
-      let type = Helper.getType(val);
-      switch (type) {
-        case 'String':
-          val = val.substr(0, 10) + (val.length > 10 ? '...' : '');
-          break;
-        case 'Array':
-          val = val.length;
-          break;
-        case 'Object':
-          let length = 0;
-          for (let p in val) {
-            length++;
-          }
-          val = length;
-          break;
-        default:
-          val = '?';
-          break;
-      }
+      let type = jQuery.type(val);
+      val = Helper.formatValue(val, type);
       rows.push({
         key: key,
-        node: Helper.getTableRow([key, val, type])
+        $element: Helper.getTableRow([key, val, type])
       });
     }
     if (sortRows) {
@@ -61,8 +26,8 @@ class Helper {
     if (maxRows) {
       rows = rows.slice(0, maxRows);
     }
-    rows.forEach(row => table.appendChild(row.node));
-    return table;
+    rows.forEach(row => $table.append(row.$element));
+    return $table;
   }
 
   /**
@@ -72,29 +37,33 @@ class Helper {
    * @return {HTMLTableRowElement}
    */
   static getTableRow(items, tag = 'td') {
-    let tr = document.createElement('tr');
-    items.forEach(item => {
-      let td = document.createElement(tag);
-      td.innerText = item;
-      tr.appendChild(td);
-    });
-    return tr;
+    let $tr = jQuery('<tr>');
+    items.forEach(item => jQuery(`<${tag}>`).text(item).appendTo($tr));
+    return $tr;
   }
 
   /**
-   * Get data type
+   * Format any value according to its type
    * @param {mixed} val
-   * @return {string}
+   * @param {string} type
    */
-  static getType(val) {
-    let type = '?';
-    if (typeof val === 'string' || val instanceof String) {
-      type = 'String';
-    } else if (Array.isArray(val)) {
-      type = 'Array';
-    } else if (typeof val === 'object') {
-      type = 'Object';
-    }
-    return type;
+  static formatValue(val, type) {
+    switch (type) {
+        case 'string':
+          return val.substr(0, 10) + (val.length > 10 ? '...' : '');
+
+        case 'array':
+          return val.length;
+
+        case 'object':
+          let length = 0;
+          for (let p in val) {
+            length++;
+          }
+          return length;
+
+        default:
+          return '?';
+      }
   }
 }
