@@ -4,8 +4,11 @@
   "description": "A small test...",
   "main": "index.js",
   "scripts": {
-    "build": "shx cp node_modules/jquery/dist/jquery.min.js src/jquery.min.js",
-    "start": "http-server ./src -o -c0",
+    "clean": "shx rm -rf dist/",
+    "copy": "shx mkdir dist/ && shx cp src/*.* dist/",
+    "browserify": "browserify src/js/app.js -d -p [ tsify ] -o dist/bundle.js",
+    "build": "npm run clean -s && npm run copy -s && npm run browserify -s",
+    "start": "http-server dist/ -o -c0",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,8 +22,11 @@
   },
   "homepage": "https://github.com/avine/diabolocom-json-viewer#readme",
   "devDependencies": {
+    "browserify": "^14.3.0",
     "http-server": "^0.10.0",
-    "shx": "^0.2.2"
+    "shx": "^0.2.2",
+    "tsify": "^3.0.1",
+    "typescript": "^2.3.2"
   },
   "dependencies": {
     "jquery": "^3.2.1"

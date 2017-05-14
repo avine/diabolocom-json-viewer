@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "alwaysStrict": true,
+    "baseUrl": ".",
+    "importHelpers": true,
+    "inlineSources": true,
+    "module": "commonjs",
+    "noEmitHelpers": true,
+    "outDir": "dist/js/",
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "es5"
+  },
+  "files": [
+    "src/js/app.js",
+    "src/js/helper.js"
+  ],
+  "exclude" : [
+    "./dist",
+    "./node_modules"
+  ] 
+}

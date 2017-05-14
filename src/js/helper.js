@@ -1,5 +1,7 @@
 
-class Helper {
+import * as $ from 'jquery';
+
+export default class Helper {
   /**
    * Make array node from json object
    * @param {object} json
@@ -7,13 +9,13 @@ class Helper {
    * @return {jQuery}
    */
   static json2Table(json, sortRows = true, maxRows = 10) {
-    const $table = jQuery('<table>').append(
+    const $table = $('<table>').append(
       Helper.getTableRow(['Key', 'Info', 'Type'], 'th')
     );
     let rows = [];
     for (let key in json) {
       let val = json[key];
-      let type = jQuery.type(val);
+      let type = $.type(val);
       val = Helper.formatValue(val, type);
       rows.push({
         key: key,
@@ -37,8 +39,8 @@ class Helper {
    * @return {HTMLTableRowElement}
    */
   static getTableRow(items, tag = 'td') {
-    let $tr = jQuery('<tr>');
-    items.forEach(item => jQuery(`<${tag}>`).text(item).appendTo($tr));
+    let $tr = $('<tr>');
+    items.forEach(item => $(`<${tag}>`).text(item).appendTo($tr));
     return $tr;
   }
 
