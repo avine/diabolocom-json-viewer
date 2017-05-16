@@ -32,24 +32,7 @@ class Helper {
     for (let key in json) {
       let val = json[key];
       let type = Helper.getType(val);
-      switch (type) {
-        case 'String':
-          val = val.substr(0, 10) + (val.length > 10 ? '...' : '');
-          break;
-        case 'Array':
-          val = val.length;
-          break;
-        case 'Object':
-          let length = 0;
-          for (let p in val) {
-            length++;
-          }
-          val = length;
-          break;
-        default:
-          val = '?';
-          break;
-      }
+      val = Helper.formatValue(val, type);
       rows.push({
         key: key,
         node: Helper.getTableRow([key, val, type])
@@ -89,12 +72,37 @@ class Helper {
   static getType(val) {
     let type = '?';
     if (typeof val === 'string' || val instanceof String) {
-      type = 'String';
+      type = 'string';
     } else if (Array.isArray(val)) {
-      type = 'Array';
+      type = 'array';
     } else if (typeof val === 'object') {
-      type = 'Object';
+      type = 'object';
     }
     return type;
+  }
+
+  /**
+   * Format any value according to its type
+   * @param {mixed} val
+   * @param {string} type
+   */
+  static formatValue(val, type) {
+    switch (type) {
+        case 'string':
+          return val.substr(0, 10) + (val.length > 10 ? '...' : '');
+
+        case 'array':
+          return val.length + (val.length === 1 ? ' item' : ' items');
+
+        case 'object':
+          let length = 0;
+          for (let p in val) {
+            length++;
+          }
+          return length + (length === 1 ? ' property' : ' properties');
+
+        default:
+          return '?';
+      }
   }
 }
