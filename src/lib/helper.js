@@ -55,14 +55,14 @@ export default class Helper {
           return val.substr(0, 10) + (val.length > 10 ? '...' : '');
 
         case 'array':
-          return val.length;
+          return val.length + (val.length === 1 ? ' item' : ' items');
 
         case 'object':
           let length = 0;
           for (let p in val) {
             length++;
           }
-          return length;
+          return length + (length === 1 ? ' property' : ' properties');
 
         default:
           return '?';
