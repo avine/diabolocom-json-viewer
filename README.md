@@ -1,8 +1,8 @@
-# diabolocom-json-viewer
-A small test using jQuery...
+# dojo-json-viewer
+
+Using jQuery.
 
 We want to develop a little page that displays a JSON structure in a nice and friendly way.
-Here’s a JSON source: https://raw.githubusercontent.com/substack/node-browserify/master/package.json.
 The page shows an input field where the user can enter the URL of the JSON structure.
 The page then displays an array with 3 columns.
 The first column contains the key.
