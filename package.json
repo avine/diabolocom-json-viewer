@@ -1,12 +1,12 @@
 {
-  "name": "diabolocom-json-viewer",
+  "name": "dojo-json-viewer",
   "version": "1.0.0",
-  "description": "A small test...",
+  "description": "Just a small dojo...",
   "main": "index.js",
   "scripts": {
     "clean": "shx rm -rf dist/",
     "copy": "shx mkdir dist/ && shx cp src/*.* dist/",
-    "browserify": "browserify src/js/app.js -d -p [ tsify ] -o dist/bundle.js",
+    "browserify": "browserify src/lib/app.js -d -p [ tsify ] -o dist/bundle.js",
     "build": "npm run clean -s && npm run copy -s && npm run browserify -s",
     "start": "http-server dist/ -o -c0",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,6 +16,7 @@
     "url": "git+https://github.com/avine/diabolocom-json-viewer.git"
   },
   "author": "Stéphane Francel <contact@avine.io>",
+  "keywords": ["jQuery", "RequireJS", "Babel"],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/avine/diabolocom-json-viewer/issues"
