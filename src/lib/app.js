@@ -1,6 +1,6 @@
 
-import * as $ from 'jquery';
-import Helper from './helper';
+import $ from 'jquery';
+import Helper from 'helper';
 
 $(document).ready(function(event) {
   const $form = $('#get-json');
